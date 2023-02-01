@@ -1,6 +1,4 @@
 const mongoose = require('mongoose')
-// const Schema = mongoose.Schema()
-
 
 const inventorySchema = new mongoose.Schema({
     inventory_id: { type: String, required: true },

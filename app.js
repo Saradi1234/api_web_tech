@@ -15,6 +15,7 @@ app.use(cors())
 
 app.use(customerRoutes)
 app.use(inventoryRoutes)
+app.use(ordersRoutes)
 
 
 app.get('/', (req, res) => {

@@ -7,7 +7,7 @@ router.post('/createCustomer', async (req, res) => {
         const { customer_id, customer_name, email } = req.body
         if (!customer_id || !customer_name || !email) {
             return res.status(401).json({
-                message: 'Ivalid request.'
+                message: 'Invalid request.'
             })
         }
         const newUser = await customerModel.create({

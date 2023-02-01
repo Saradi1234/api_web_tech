@@ -13,7 +13,7 @@ router.post('/createInventory', async (req, res) => {
             || !item_name
             || !available_quantity) {
             return res.status(401).json({
-                message: 'Ivalid request.'
+                message: 'Invalid request.'
             })
         }
         const newInventory = await inventoryModel.create({
@@ -25,6 +25,7 @@ router.post('/createInventory', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
 router.get('/inventory', async (req, res) => {
     try {
         const inventories = await inventoryModel.find()
@@ -34,6 +35,7 @@ router.get('/inventory', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
 router.get('/inventory/:inventoryType', async (req, res) => {
     try {
         const inventoryType = req.params.inventoryType
@@ -45,17 +47,18 @@ router.get('/inventory/:inventoryType', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
 router.put('/:itemName/:availableQuantity', async (req, res) => {
     try {
         // const inventoryType = req.params.inventoryType
         const item = await inventoryModel.find(
             { item_name: req.params.itemName })
         if (item.available_quantity < req.params.availableQuantity) {
-            return res.status(200).json({message: "ITEM IS OUT OF STOCK"})
-            
+            return res.status(200).json({ message: "ITEM IS OUT OF STOCK" })
+
         }
-        await inventoryModel.updateOne({item_name: req.params.itemName},
-            {$set:{available_quantity: (available_quantity - req.params.availableQuantity)}})
+        await inventoryModel.updateOne({ item_name: req.params.itemName },
+            { $set: { available_quantity: (available_quantity - req.params.availableQuantity) } })
         return res.status(200).json({
             newAvailableQuantity: (available_quantity - req.params.availableQuantity)
         })
@@ -64,4 +67,6 @@ router.put('/:itemName/:availableQuantity', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
+
 module.exports = router
